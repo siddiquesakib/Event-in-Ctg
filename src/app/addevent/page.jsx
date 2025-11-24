@@ -1,6 +1,45 @@
-import React from "react";
+"use client";
 
-export default function addevent() {
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+
+export default function AddEventPage() {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = {
+      email: "amibo@Gmali.com",
+      title: e.target.title.value,
+      description: e.target.description.value,
+      category: e.target.category.value,
+      start_date: e.target.start_date.value,
+      end_date: e.target.end_date.value,
+      location: e.target.location.value,
+      organizer: e.target.organizer.value,
+      time: e.target.time.value,
+      img: e.target.img.value,
+    };
+
+    console.log(formData);
+
+    fetch("http://localhost:4000/event", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        toast.success("Successfully added!");
+        console.log(data);
+        e.target.reset();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className="max-w-4xl mx-auto px-4 py-12">
       <div className="bg-lightBg dark:bg-darkBg rounded-2xl shadow-xl p-8">
@@ -18,9 +57,7 @@ export default function addevent() {
             <input
               type="text"
               name="title"
-              value={formData.title}
-              onChange={handleChange}
-              required
+              // required
               className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none"
               placeholder="e.g., Tech Conference 2026"
             />
@@ -33,9 +70,7 @@ export default function addevent() {
             </label>
             <textarea
               name="description"
-              value={formData.description}
-              onChange={handleChange}
-              required
+              // required
               rows="6"
               className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none"
               placeholder="Provide detailed information about your event..."
@@ -51,9 +86,7 @@ export default function addevent() {
               <input
                 type="text"
                 name="category"
-                value={formData.category}
-                onChange={handleChange}
-                required
+                // required
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none"
                 placeholder="e.g., Technology/Workshop"
               />
@@ -66,9 +99,7 @@ export default function addevent() {
               <input
                 type="text"
                 name="organizer"
-                value={formData.organizer}
-                onChange={handleChange}
-                required
+                // required
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none"
                 placeholder="Organization name"
               />
@@ -84,9 +115,7 @@ export default function addevent() {
               <input
                 type="datetime-local"
                 name="start_date"
-                value={formData.start_date}
-                onChange={handleChange}
-                required
+                // required
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none"
               />
             </div>
@@ -98,9 +127,7 @@ export default function addevent() {
               <input
                 type="datetime-local"
                 name="end_date"
-                value={formData.end_date}
-                onChange={handleChange}
-                required
+                // required
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none"
               />
             </div>
@@ -115,9 +142,7 @@ export default function addevent() {
               <input
                 type="text"
                 name="time"
-                value={formData.time}
-                onChange={handleChange}
-                required
+                // required
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none"
                 placeholder="e.g., 10:00 AM – 6:00 PM (GMT+6)"
               />
@@ -130,9 +155,7 @@ export default function addevent() {
               <input
                 type="text"
                 name="location"
-                value={formData.location}
-                onChange={handleChange}
-                required
+                // required
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none"
                 placeholder="Full address in Chattogram"
               />
@@ -147,9 +170,7 @@ export default function addevent() {
             <input
               type="url"
               name="img"
-              value={formData.img}
-              onChange={handleChange}
-              required
+              // required
               className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none"
               placeholder="https://example.com/image.jpg"
             />
@@ -159,10 +180,9 @@ export default function addevent() {
           <div className="flex gap-4 pt-4">
             <button
               type="submit"
-              disabled={loading}
-              className="flex-1 bg-blue-600 text-white py-4 rounded-xl font-semibold text-lg hover:bg-blue-700 transition shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 bg-blue-600 text-white py-4 rounded-xl font-semibold text-lg hover:bg-blue-700 transition shadow-lg"
             >
-              {loading ? "Adding Event..." : "Add Event"}
+              Add Event
             </button>
             <button
               type="button"

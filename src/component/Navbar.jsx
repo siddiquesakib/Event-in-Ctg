@@ -30,9 +30,12 @@ export default function Navbar() {
           <Link href="/contact" className="hover:text-white transition">
             Contact
           </Link>
+          <Link href="/addevent" className="hover:text-white transition">
+            add event
+          </Link>
         </div>
 
-        <div cl>
+        <div>
           <Link
             href="/login"
             className="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition"
