@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
 export default function AddEventPage() {
@@ -57,7 +56,7 @@ export default function AddEventPage() {
             <input
               type="text"
               name="title"
-              // required
+              required
               className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none"
               placeholder="e.g., Tech Conference 2026"
             />
@@ -70,7 +69,7 @@ export default function AddEventPage() {
             </label>
             <textarea
               name="description"
-              // required
+              required
               rows="6"
               className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none"
               placeholder="Provide detailed information about your event..."
@@ -86,7 +85,7 @@ export default function AddEventPage() {
               <input
                 type="text"
                 name="category"
-                // required
+                required
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none"
                 placeholder="e.g., Technology/Workshop"
               />
@@ -99,7 +98,7 @@ export default function AddEventPage() {
               <input
                 type="text"
                 name="organizer"
-                // required
+                required
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none"
                 placeholder="Organization name"
               />
@@ -115,7 +114,7 @@ export default function AddEventPage() {
               <input
                 type="datetime-local"
                 name="start_date"
-                // required
+                required
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none"
               />
             </div>
@@ -127,7 +126,7 @@ export default function AddEventPage() {
               <input
                 type="datetime-local"
                 name="end_date"
-                // required
+                required
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none"
               />
             </div>
@@ -142,7 +141,7 @@ export default function AddEventPage() {
               <input
                 type="text"
                 name="time"
-                // required
+                required
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none"
                 placeholder="e.g., 10:00 AM – 6:00 PM (GMT+6)"
               />
@@ -155,7 +154,7 @@ export default function AddEventPage() {
               <input
                 type="text"
                 name="location"
-                // required
+                required
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none"
                 placeholder="Full address in Chattogram"
               />
@@ -170,7 +169,7 @@ export default function AddEventPage() {
             <input
               type="url"
               name="img"
-              // required
+              required
               className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none"
               placeholder="https://example.com/image.jpg"
             />
