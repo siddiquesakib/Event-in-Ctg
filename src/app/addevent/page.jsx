@@ -1,8 +1,22 @@
 "use client";
 
+import { AuthContext } from "@/Context/AuthProvider";
+import { useRouter } from "next/router";
+import { useContext, useEffect } from "react";
 import { toast } from "react-toastify";
 
 export default function AddEventPage() {
+  const { user } = useContext(AuthContext);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!user) {
+      router.push("/login");
+      return;
+    }
+  });
+  if (!user) return null;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 

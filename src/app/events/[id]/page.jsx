@@ -1,12 +1,33 @@
-export default async function page({ params }) {
-  const { id } = await params;
+"use client";
+import { useContext, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { AuthContext } from "@/Context/AuthProvider";
 
-  const res = await fetch(`http://localhost:4000/events/${id}`, {
-    cache: "no-store",
-  });
-  const data = await res.json();
+export default function EventDetail({ params }) {
+  const { user } = useContext(AuthContext);
+  const router = useRouter();
+  const [data, setData] = useState(null);
 
-  return (
+  useEffect(() => {
+    if (!user) {
+      router.push("/login");
+      return;
+    }
+    (async () => {
+      const { id } = await params;
+      const res = await fetch(`http://localhost:4000/events/${id}`, {
+        cache: "no-store",
+      });
+      setData(await res.json());
+    })();
+  }, [user, params, router]);
+
+  if (!user) return null;
+  if (!data) return <p className="text-center py-12">Loading...</p>;
+
+  return !data ? (
+    <p className="text-center py-12">Loading...</p>
+  ) : (
     <div className="max-w-5xl mx-auto px-4 py-12">
       {/* Hero Image */}
       <div className="relative w-full h-[500px] rounded-2xl overflow-hidden mb-8 shadow-2xl">
