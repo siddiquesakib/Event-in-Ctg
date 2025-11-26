@@ -1,22 +1,23 @@
 import Link from "next/link";
 
-export default async function EventsPage() {
-  const res = await fetch("http://localhost:4000/events");
+export default async function Recent6() {
+  const res = await fetch("http://localhost:4000/latest-events");
   const data = await res.json();
-  // console.log(data);
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">
       {/* Page Title */}
       <div className="mb-8 text-center">
-        <h1 className="text-4xl font-bold mb-2">Upcoming Events</h1>
+        <h1 className="text-4xl font-bold mb-2 text-gray-900 dark:text-white">
+          Recent Events
+        </h1>
         <p className="text-gray-600 dark:text-gray-300">
           Discover the best events happening in Chattogram — workshops,
           exhibitions, meetups, and more.
         </p>
       </div>
 
-          {/* Event Grid */}
+      {/* Event Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {data.map((event) => (
           <div

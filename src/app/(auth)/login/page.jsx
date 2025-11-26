@@ -6,8 +6,23 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
 export default function LoginPage() {
-  const { googleLogin } = useContext(AuthContext);
+  const { googleLogin, signIn } = useContext(AuthContext);
   const router = useRouter();
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    signIn(email, password)
+      .then((res) => {
+        toast.success(`Welcome ${res.user.displayName || "back"}!`);
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        toast.error(errorMessage);
+      });
+  };
 
   const handleGoogle = () => {
     googleLogin()
@@ -28,27 +43,32 @@ export default function LoginPage() {
           Login
         </h1>
 
-        <form className="grid gap-6">
+        <form onSubmit={handleLogin} className="grid gap-6">
           <input
             type="email"
+            name="email"
             placeholder="Email"
             className="bg-gray-900 border border-gray-700 px-4 py-3 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
 
           <input
             type="password"
+            name="password"
             placeholder="Password"
             className="bg-gray-900 border border-gray-700 px-4 py-3 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
 
-          <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-3 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg">
+          <button
+            type="submit"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-3 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer"
+          >
             Login
           </button>
 
           <button
             onClick={handleGoogle}
             type="button"
-            className="w-full border border-gray-300 dark:border-gray-700 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-neutral-800 transition-colors mb-8 flex items-center justify-center gap-3"
+            className="w-full border border-gray-300 dark:border-gray-700 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-neutral-800 transition-colors mb-8 flex items-center justify-center gap-3 "
           >
             <img
               src="https://www.svgrepo.com/show/475656/google-color.svg"

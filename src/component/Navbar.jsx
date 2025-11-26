@@ -45,9 +45,14 @@ export default function Navbar() {
         Contact
       </Link>
       {user && (
-        <Link href="/addevent" className="hover:text-blue-400 transition">
-          Add Event
-        </Link>
+        <>
+          <Link href="/addevent" className="hover:text-blue-400 transition">
+            Add Event
+          </Link>
+          <Link href="/manage_events" className="hover:text-blue-400 transition">
+            Manage Events
+          </Link>
+        </>
       )}
     </>
   );
@@ -102,18 +107,18 @@ export default function Navbar() {
                   </p>
                 </div>
                 <Link
-                  href="/profile"
+                  href="/manage_events"
                   className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
                   onClick={() => setDropdownOpen(false)}
                 >
-                  My Profile
+                  My Events/ Manage Events
                 </Link>
                 <Link
-                  href="/my-events"
+                  href="/addevent"
                   className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
                   onClick={() => setDropdownOpen(false)}
                 >
-                  My Events
+                  Add Events
                 </Link>
                 <hr className="my-2 border-gray-200 dark:border-gray-700" />
                 <button
