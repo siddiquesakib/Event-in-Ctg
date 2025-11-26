@@ -73,7 +73,7 @@ export default function AddEventPage() {
         setIsSubmitting(false);
 
         setTimeout(() => {
-          router.push("/manage_events");
+          // router.push("/manage_events");
         }, 1500);
       })
       .catch((err) => {
