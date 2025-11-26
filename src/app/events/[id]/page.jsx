@@ -15,7 +15,7 @@ export default function EventDetail({ params }) {
     }
     (async () => {
       const { id } = await params;
-      const res = await fetch(`http://localhost:4000/events/${id}`, {
+      const res = await fetch(`https://event-in-ctg-server.vercel.app/${id}`, {
         cache: "no-store",
       });
       setData(await res.json());

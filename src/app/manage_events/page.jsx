@@ -22,7 +22,7 @@ export default function Page() {
     const loadData = async () => {
       try {
         const res = await fetch(
-          `http://localhost:4000/events?email=${user.email}`
+          `https://event-in-ctg-server.vercel.app?email=${user.email}`
         );
         const data = await res.json();
         setEvents(data);
@@ -48,7 +48,7 @@ export default function Page() {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:4000/events/${id}`, {
+        fetch(`https://event-in-ctg-server.vercel.app/${id}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",

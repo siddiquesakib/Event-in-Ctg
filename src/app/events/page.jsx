@@ -11,7 +11,7 @@ export default function EventsPage() {
   // Fetch events from API
   useEffect(() => {
     const fetchEvents = async () => {
-      const res = await fetch("http://localhost:4000/events");
+      const res = await fetch("https://event-in-ctg-server.vercel.app");
       const data = await res.json();
       setEvents(data);
       setFilterEvent(data);
