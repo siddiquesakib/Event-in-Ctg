@@ -13,6 +13,10 @@ export default function Page() {
 
   // Load events for this user
   useEffect(() => {
+    if (!user) {
+      router.push("/login");
+      return;
+    }
     if (!user?.email) return;
 
     const loadData = async () => {

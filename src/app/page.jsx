@@ -1,7 +1,7 @@
 import Hero from "@/component/Hero";
 import Recent6 from "@/component/Recent6";
 import Banner from "@/component/Banner";
-import BlogSection from "@/component/BlogSection";
+import ExploreByDate from "@/component/ExploreByDate";
 import PopularFormats from "@/component/PopularFormats";
 
 export default function Home() {
@@ -9,9 +9,9 @@ export default function Home() {
     <div>
       <Hero />
       <Recent6 />
-      <PopularFormats/>
-      <BlogSection/>
-      <Banner/>
+      <PopularFormats />
+      <ExploreByDate />
+      <Banner />
     </div>
   );
 }

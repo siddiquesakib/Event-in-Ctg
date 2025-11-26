@@ -4,12 +4,14 @@ import Link from "next/link";
 import Logo from "./Logo";
 import { useContext, useState, useEffect, useRef } from "react";
 import { AuthContext } from "@/Context/AuthProvider";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const { user, logOut } = useContext(AuthContext);
   const [open, setOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const pathname = usePathname();
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -30,26 +32,35 @@ export default function Navbar() {
       .catch((error) => console.error(error));
   };
 
+  const isActive = (path) =>
+    pathname === path
+      ? "bg-blue-600 text-white px-3 py-1 rounded-md"
+      : "text-gray-300 hover:text-blue-400 transition";
+
   const navlink = (
     <>
-      <Link href="/" className="hover:text-blue-400 transition">
+      <Link href="/" className={isActive("/")}>
         Home
       </Link>
-      <Link href="/events" className="hover:text-blue-400 transition">
+
+      <Link href="/events" className={isActive("/events")}>
         Events
       </Link>
-      <Link href="/about" className="hover:text-blue-400 transition">
+
+      <Link href="/about" className={isActive("/about")}>
         About
       </Link>
-      <Link href="/contact" className="hover:text-blue-400 transition">
+
+      <Link href="/contact" className={isActive("/contact")}>
         Contact
       </Link>
+
       {user && (
         <>
-          <Link href="/addevent" className="hover:text-blue-400 transition">
+          <Link href="/addevent" className={isActive("/addevent")}>
             Add Event
           </Link>
-          <Link href="/manage_events" className="hover:text-blue-400 transition">
+          <Link href="/manage_events" className={isActive("/manage_events")}>
             Manage Events
           </Link>
         </>

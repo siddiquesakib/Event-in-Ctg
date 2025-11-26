@@ -17,6 +17,7 @@ export default function LoginPage() {
     signIn(email, password)
       .then((res) => {
         toast.success(`Welcome ${res.user.displayName || "back"}!`);
+        router.push("/");
       })
       .catch((error) => {
         const errorMessage = error.message;

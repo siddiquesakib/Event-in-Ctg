@@ -53,8 +53,6 @@ export default function AddEventPage() {
       img: e.target.img.value,
     };
 
-    console.log(formData);
-
     fetch("http://localhost:4000/events", {
       method: "POST",
       headers: {
@@ -74,7 +72,6 @@ export default function AddEventPage() {
         e.target.reset();
         setIsSubmitting(false);
 
-        // Redirect to manage events page
         setTimeout(() => {
           // router.push("/manage_events");
         }, 1500);

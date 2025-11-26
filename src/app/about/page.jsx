@@ -4,7 +4,7 @@ export const metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="bg-black text-gray-200 min-h-screen py-20">
+    <div className=" text-gray-200 min-h-screen py-20">
       <div className="max-w-4xl mx-auto px-4">
         <h1 className="text-4xl font-bold text-white mb-6">
           About <span className="text-blue-500">EventCTG</span>
