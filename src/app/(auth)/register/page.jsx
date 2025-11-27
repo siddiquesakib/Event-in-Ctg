@@ -92,7 +92,7 @@ export default function RegisterPage() {
 
           <button
             type="submit"
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-3 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg"
+            className="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-3 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg"
           >
             Register
           </button>
@@ -106,7 +106,7 @@ export default function RegisterPage() {
           <button
             onClick={handleGoogle}
             type="button"
-            className="w-full border border-gray-700 py-3 rounded-lg hover:bg-gray-900 transition-colors flex items-center justify-center gap-3"
+            className="w-full border border-gray-700 py-3 rounded-lg hover:bg-gray-900 transition-colors flex items-center justify-center gap-3 cursor-pointer"
           >
             <img
               src="https://www.svgrepo.com/show/475656/google-color.svg"

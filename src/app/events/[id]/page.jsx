@@ -29,6 +29,10 @@ export default function EventDetail({ params }) {
   if (!user) return null;
   if (!data) return <p className="text-center py-12">Loading...</p>;
 
+  const handleSend = (e) => {
+    toast.success("Thanks for your Registration!");
+  };
+
   return !data ? (
     <p className="text-center py-12">Loading...</p>
   ) : (
@@ -154,7 +158,7 @@ export default function EventDetail({ params }) {
 
       {/* Action Buttons */}
       <div className="flex gap-4 mt-8">
-        <button className="flex-1 bg-blue-600 text-white py-4 rounded-xl font-semibold text-lg hover:bg-blue-700 transition shadow-lg">
+        <button onClick={handleSend} className="flex-1 bg-blue-600 text-white py-4 rounded-xl font-semibold text-lg hover:bg-blue-700 transition shadow-lg">
           Register Now
         </button>
         <button className="px-8 border-2 border-blue-600 text-blue-600 dark:text-blue-400 py-4 rounded-xl font-semibold hover:bg-blue-50 dark:hover:bg-gray-800 transition">

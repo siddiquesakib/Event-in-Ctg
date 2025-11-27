@@ -29,7 +29,7 @@ export default function Hero() {
           </Link>
           <Link
             href="/register"
-            className="px-6 py-3 border border-white text-white hover:bg-white hover:text-blue-600 rounded-lg transition"
+            className="px-6 py-3 border border-white text-white hover:bg-white hover:text-blue-600 rounded-lg transition "
           >
             Register Now
           </Link>
