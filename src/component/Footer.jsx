@@ -46,18 +46,39 @@ export default function Footer() {
           <h3 className="text-lg font-semibold text-white">Connect</h3>
           <ul className="mt-4 space-y-2">
             <li>
-              <a className="hover:text-white transition" href="#">
+              <a
+                className="hover:text-white transition"
+                target="_blank"
+                href="https://www.facebook.com/"
+              >
                 Facebook
               </a>
             </li>
             <li>
-              <a className="hover:text-white transition" href="#">
+              <a
+                className="hover:text-white transition"
+                target="_blank"
+                href="https://www.instagram.com/"
+              >
                 Instagram
               </a>
             </li>
             <li>
-              <a className="hover:text-white transition" href="#">
-                Twitter
+              <a
+                className="hover:text-white transition"
+                target="_blank"
+                href="https://github.com/siddiquesakib"
+              >
+                Github
+              </a>
+            </li>
+            <li>
+              <a
+                className="hover:text-white transition"
+                target="_blank"
+                href="https://x.com/"
+              >
+                X
               </a>
             </li>
           </ul>

@@ -53,7 +53,7 @@ export default function AddEventPage() {
       img: e.target.img.value,
     };
 
-    fetch("https://event-in-ctg-server.vercel.app", {
+    fetch("https://event-in-ctg-server.vercel.app/events", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -187,7 +187,7 @@ export default function AddEventPage() {
                 name="time"
                 required
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none"
-                placeholder="e.g., 10:00 AM – 6:00 PM (GMT+6)"
+                placeholder="e.g., 10:00 AM - 6:00 PM (GMT+6)"
               />
             </div>
 

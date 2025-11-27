@@ -2,6 +2,7 @@
 import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AuthContext } from "@/Context/AuthProvider";
+import { toast } from "react-toastify";
 
 export default function EventDetail({ params }) {
   const { user } = useContext(AuthContext);
@@ -15,9 +16,12 @@ export default function EventDetail({ params }) {
     }
     (async () => {
       const { id } = await params;
-      const res = await fetch(`https://event-in-ctg-server.vercel.app/${id}`, {
-        cache: "no-store",
-      });
+      const res = await fetch(
+        `https://event-in-ctg-server.vercel.app/events/${id}`,
+        {
+          cache: "no-store",
+        }
+      );
       setData(await res.json());
     })();
   }, [user, params, router]);

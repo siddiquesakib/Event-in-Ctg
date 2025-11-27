@@ -1,8 +1,13 @@
-export const metadata = {
-  title: "Contact",
-};
+"use client";
+
+import { toast } from "react-toastify";
 
 export default function ContactPage() {
+  const handleSend = (e) => {
+    e.preventDefault();
+    toast.success("Thanks!");
+  };
+
   return (
     <section className="max-w-5xl mx-auto px-4 py-20 text-gray-200">
       <h1 className="text-4xl font-bold mb-6 text-white">Contact Us</h1>
@@ -12,7 +17,7 @@ export default function ContactPage() {
         from you. Fill out the form below.
       </p>
 
-      <form className="grid gap-6">
+      <form onSubmit={handleSend} className="grid gap-6">
         <div>
           <label className="block mb-2 text-sm">Name</label>
           <input
@@ -37,7 +42,10 @@ export default function ContactPage() {
           ></textarea>
         </div>
 
-        <button className="px-6 py-3 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition w-fit">
+        <button
+          type="submit"
+          className="px-6 py-3 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition w-fit"
+        >
           Send Message
         </button>
       </form>
