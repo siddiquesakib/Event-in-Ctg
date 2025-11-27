@@ -30,7 +30,7 @@ export default async function Recent6() {
           {data.map((event) => (
             <div
               key={event._id}
-              className="bg-white dark:bg-gray-800 shadow-lg rounded-xl overflow-hidden transform transition duration-300 hover:-translate-y-2 hover:shadow-2xl hover:border-blue-500 hover:border-2"
+              className=" dark:bg-gray-800 shadow-lg rounded-xl overflow-hidden transform transition duration-300 hover:-translate-y-2 hover:shadow-2xl hover:border-blue-500 hover:border-2"
             >
               {/* Event Image */}
               <div className="relative w-full h-48">
