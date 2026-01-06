@@ -16,7 +16,53 @@ export const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [dbUser, setDbUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [role, setRole] = useState(null);
+
+  // Save user to database
+  const saveUserToDb = async (firebaseUser) => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/users/${firebaseUser.email}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: firebaseUser.displayName || "",
+            photoURL: firebaseUser.photoURL || "",
+          }),
+        }
+      );
+      const data = await response.json();
+      setDbUser(data);
+      setRole(data.role || "user");
+      return data;
+    } catch (error) {
+      console.error("Error saving user to DB:", error);
+      setRole("user");
+      return null;
+    }
+  };
+
+  // Fetch user from database
+  const fetchUserFromDb = async (email) => {
+    try {
+      const response = await fetch(`http://localhost:5000/users/${email}`);
+      if (response.ok) {
+        const data = await response.json();
+        setDbUser(data);
+        setRole(data.role || "user");
+        return data;
+      }
+      return null;
+    } catch (error) {
+      console.error("Error fetching user from DB:", error);
+      return null;
+    }
+  };
 
   const createUser = (email, password) => {
     setLoading(true);
@@ -39,12 +85,26 @@ const AuthProvider = ({ children }) => {
 
   const logOut = () => {
     setLoading(true);
+    setDbUser(null);
+    setRole(null);
     return signOut(auth);
   };
 
+  // Check role helpers
+  const isAdmin = role === "admin";
+  const isOrganizer = role === "organizer" || role === "admin";
+  const isUser = role === "user";
+
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
+      if (currentUser) {
+        // Save or fetch user from database
+        await saveUserToDb(currentUser);
+      } else {
+        setDbUser(null);
+        setRole(null);
+      }
       setLoading(false);
     });
     return () => {
@@ -54,6 +114,11 @@ const AuthProvider = ({ children }) => {
 
   const authInfo = {
     user,
+    dbUser,
+    role,
+    isAdmin,
+    isOrganizer,
+    isUser,
     setUser,
     loading,
     googleLogin,
@@ -61,6 +126,8 @@ const AuthProvider = ({ children }) => {
     signIn,
     updateUser,
     logOut,
+    fetchUserFromDb,
+    saveUserToDb,
   };
 
   return (
