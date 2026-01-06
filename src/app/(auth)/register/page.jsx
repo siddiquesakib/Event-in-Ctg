@@ -1,131 +1,101 @@
 "use client";
 
+import { useContext, useState } from "react";
 import { AuthContext } from "@/Context/AuthProvider";
-import { useContext } from "react";
 import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
+import Link from "next/link";
 
 export default function RegisterPage() {
-  const { createUser, updateUser, googleLogin } = useContext(AuthContext);
+  const { createUser, updateUserProfile } = useContext(AuthContext);
   const router = useRouter();
+  const [error, setError] = useState("");
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
-    const photoURL = form.photo.value;
+    const photoURL = form.photoURL.value;
 
-    // Password validation
-    if (password.length < 6) {
-      toast.error("Password must be at least 6 characters");
-      return;
+    try {
+      await createUser(email, password);
+      await updateUserProfile(name, photoURL);
+      router.push("/");
+    } catch (err) {
+      setError(err.message);
     }
-
-    createUser(email, password)
-      .then((result) => {
-        updateUser({ displayName: name, photoURL: photoURL })
-          .then(() => {
-            toast.success("Account created successfully!");
-            router.push("/");
-          })
-          .catch((error) => {
-            toast.error(error.message);
-          });
-      })
-      .catch((error) => {
-        toast.error(error.message);
-      });
-  };
-
-  const handleGoogle = () => {
-    googleLogin()
-      .then((res) => {
-        toast.success(`Welcome ${res.user.displayName}!`);
-        router.push("/");
-      })
-      .catch((error) => {
-        toast.error(error.message);
-      });
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-900 to-black px-4 py-12">
-      <div className="bg-gray-800 rounded-2xl shadow-xl p-10 max-w-md w-full">
-        <h1 className="text-4xl font-bold text-white mb-8 text-center">
-          Register
-        </h1>
-
-        <form onSubmit={handleRegister} className="grid gap-6">
-          <input
-            type="text"
-            name="name"
-            placeholder="Full Name"
-            required
-            className="bg-gray-900 border border-gray-700 px-4 py-3 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
-
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            required
-            className="bg-gray-900 border border-gray-700 px-4 py-3 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
-
-          <input
-            type="url"
-            name="photo"
-            placeholder="Photo URL"
-            required
-            className="bg-gray-900 border border-gray-700 px-4 py-3 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
-
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            required
-            className="bg-gray-900 border border-gray-700 px-4 py-3 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
-
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 to-black px-4">
+      <div className="max-w-md w-full bg-white dark:bg-gray-800 rounded-xl shadow-2xl p-8">
+        <h2 className="text-3xl font-bold text-center text-gray-800 dark:text-white mb-6">
+          Create Account
+        </h2>
+        {error && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+            {error}
+          </div>
+        )}
+        <form onSubmit={handleRegister} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Full Name
+            </label>
+            <input
+              type="text"
+              name="name"
+              required
+              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Email
+            </label>
+            <input
+              type="email"
+              name="email"
+              required
+              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Password
+            </label>
+            <input
+              type="password"
+              name="password"
+              required
+              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Photo URL
+            </label>
+            <input
+              type="url"
+              name="photoURL"
+              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+            />
+          </div>
           <button
             type="submit"
-            className="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-3 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg"
+            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition font-semibold"
           >
             Register
           </button>
-
-          <div className="relative flex items-center">
-            <div className="flex-grow border-t border-gray-700"></div>
-            <span className="px-4 text-gray-400 text-sm">OR</span>
-            <div className="flex-grow border-t border-gray-700"></div>
-          </div>
-
-          <button
-            onClick={handleGoogle}
-            type="button"
-            className="w-full border border-gray-700 py-3 rounded-lg hover:bg-gray-900 transition-colors flex items-center justify-center gap-3 cursor-pointer"
-          >
-            <img
-              src="https://www.svgrepo.com/show/475656/google-color.svg"
-              alt="Google"
-              className="w-6 h-6"
-            />
-            <span className="text-gray-200 text-base font-medium">
-              Register with Google
-            </span>
-          </button>
         </form>
-
-        <p className="text-gray-400 mt-6 text-center text-sm">
+        <p className="text-center text-gray-600 dark:text-gray-400 mt-4">
           Already have an account?{" "}
-          <a href="/login" className="text-blue-400 hover:underline">
+          <Link href="/login" className="text-blue-600 hover:underline">
             Login
-          </a>
+          </Link>
         </p>
       </div>
-    </section>
+    </div>
   );
 }
