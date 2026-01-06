@@ -8,7 +8,7 @@ import { ThemeContext } from "@/Context/ThemeProvider";
 import { usePathname, useRouter } from "next/navigation";
 
 export default function Navbar() {
-  const { user, logOut } = useContext(AuthContext);
+  const { user, logOut, role, isAdmin, isOrganizer } = useContext(AuthContext);
   const { theme, toggleTheme } = useContext(ThemeContext);
   const [open, setOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -80,10 +80,11 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Get user role (check if admin)
-  const getUserRole = () => {
-    const adminEmails = ["admin@eventinctg.com", "admin@gmail.com"];
-    return user && adminEmails.includes(user.email) ? "Admin" : "User";
+  // Get user role badge
+  const getUserRoleBadge = () => {
+    if (isAdmin) return { label: "Admin", color: "bg-red-500" };
+    if (isOrganizer) return { label: "Organizer", color: "bg-blue-500" };
+    return { label: "User", color: "bg-gray-500" };
   };
 
   // Get breadcrumb path
@@ -285,13 +286,11 @@ export default function Navbar() {
                   />
                   {/* User Role Badge */}
                   <span
-                    className={`absolute -bottom-1 -right-1 px-1.5 py-0.5 text-xs font-bold rounded-full ${
-                      getUserRole() === "Admin"
-                        ? "bg-purple-600 text-white"
-                        : "bg-blue-600 text-white"
+                    className={`absolute -bottom-1 -right-1 px-1.5 py-0.5 text-xs font-bold rounded-full text-white ${
+                      getUserRoleBadge().color
                     }`}
                   >
-                    {getUserRole() === "Admin" ? "A" : "U"}
+                    {getUserRoleBadge().label.charAt(0)}
                   </span>
                 </div>
                 <svg
@@ -317,19 +316,66 @@ export default function Navbar() {
                     <p className="font-semibold text-gray-800 dark:text-white flex items-center gap-2">
                       {user.displayName || "User"}
                       <span
-                        className={`text-xs px-2 py-0.5 rounded-full ${
-                          getUserRole() === "Admin"
-                            ? "bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300"
-                            : "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300"
+                        className={`text-xs px-2 py-0.5 rounded-full text-white ${
+                          getUserRoleBadge().color
                         }`}
                       >
-                        {getUserRole()}
+                        {getUserRoleBadge().label}
                       </span>
                     </p>
                     <p className="text-sm text-gray-500 dark:text-gray-400 truncate">
                       {user.email}
                     </p>
                   </div>
+
+                  {/* Admin Panel Link */}
+                  {isAdmin && (
+                    <Link
+                      href="/admin"
+                      className="flex items-center gap-2 px-4 py-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition font-medium"
+                      onClick={() => setDropdownOpen(false)}
+                    >
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                        />
+                      </svg>
+                      Admin Panel
+                    </Link>
+                  )}
+
+                  {/* Organizer Dashboard Link */}
+                  {isOrganizer && (
+                    <Link
+                      href="/organizer"
+                      className="flex items-center gap-2 px-4 py-2 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition font-medium"
+                      onClick={() => setDropdownOpen(false)}
+                    >
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                        />
+                      </svg>
+                      Organizer Dashboard
+                    </Link>
+                  )}
+
                   <Link
                     href="/manage_events"
                     className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
@@ -350,6 +396,13 @@ export default function Navbar() {
                     onClick={() => setDropdownOpen(false)}
                   >
                     Dashboard
+                  </Link>
+                  <Link
+                    href="/profile"
+                    className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+                    onClick={() => setDropdownOpen(false)}
+                  >
+                    Profile
                   </Link>
                   <hr className="my-2 border-gray-200 dark:border-gray-700" />
                   <button
