@@ -34,7 +34,9 @@ export default function Navbar() {
   useEffect(() => {
     const fetchActiveEvents = async () => {
       try {
-        const response = await fetch("http://localhost:5000/events");
+        const response = await fetch(
+          "https://event-in-ctg-server.vercel.app/events"
+        );
         const data = await response.json();
         const now = new Date();
         const active = data.filter((event) => new Date(event.date) >= now);

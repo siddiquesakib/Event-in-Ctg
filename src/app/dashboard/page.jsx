@@ -36,15 +36,17 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-//     if (!user) {
-//       router.push("/login");
-//       return;
-//     }
+    //     if (!user) {
+    //       router.push("/login");
+    //       return;
+    //     }
 
     const fetchDashboardData = async () => {
       try {
         setLoading(true);
-        const response = await fetch("http://localhost:5000/events");
+        const response = await fetch(
+          "https://event-in-ctg-server.vercel.app/events"
+        );
         const data = await response.json();
 
         const now = new Date();

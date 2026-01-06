@@ -24,7 +24,7 @@ const AuthProvider = ({ children }) => {
   const saveUserToDb = async (firebaseUser) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/users/${firebaseUser.email}`,
+        `https://event-in-ctg-server.vercel.app/users/${firebaseUser.email}`,
         {
           method: "PUT",
           headers: {
@@ -50,7 +50,9 @@ const AuthProvider = ({ children }) => {
   // Fetch user from database
   const fetchUserFromDb = async (email) => {
     try {
-      const response = await fetch(`http://localhost:5000/users/${email}`);
+      const response = await fetch(
+        `https://event-in-ctg-server.vercel.app/users/${email}`
+      );
       if (response.ok) {
         const data = await response.json();
         setDbUser(data);

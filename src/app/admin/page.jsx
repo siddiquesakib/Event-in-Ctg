@@ -40,11 +40,15 @@ export default function AdminDashboard() {
       setLoading(true);
 
       // Fetch real users from database
-      const usersResponse = await fetch("http://localhost:5000/users");
+      const usersResponse = await fetch(
+        "https://event-in-ctg-server.vercel.app/users"
+      );
       const allUsers = await usersResponse.json();
 
       // Fetch events
-      const eventsResponse = await fetch("http://localhost:5000/events");
+      const eventsResponse = await fetch(
+        "https://event-in-ctg-server.vercel.app/events"
+      );
       const allEvents = await eventsResponse.json();
 
       setStats({
@@ -70,7 +74,7 @@ export default function AdminDashboard() {
     try {
       const newStatus = action === "suspend" ? "suspended" : "active";
       const response = await fetch(
-        `http://localhost:5000/users/${email}/status`,
+        `https://event-in-ctg-server.vercel.app/users/${email}/status`,
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
@@ -96,7 +100,7 @@ export default function AdminDashboard() {
   const handleRoleChange = async (email, newRole) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/users/${email}/role`,
+        `https://event-in-ctg-server.vercel.app/users/${email}/role`,
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
@@ -122,9 +126,12 @@ export default function AdminDashboard() {
   const handleEventAction = async (eventId, action) => {
     if (action === "delete") {
       try {
-        await fetch(`http://localhost:5000/events/${eventId}`, {
-          method: "DELETE",
-        });
+        await fetch(
+          `https://event-in-ctg-server.vercel.app/events/${eventId}`,
+          {
+            method: "DELETE",
+          }
+        );
         setEvents(events.filter((e) => e._id !== eventId));
       } catch (error) {
         console.error("Error deleting event:", error);

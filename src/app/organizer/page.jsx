@@ -37,7 +37,9 @@ export default function OrganizerDashboard() {
   const fetchOrganizerData = async () => {
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:5000/events");
+      const response = await fetch(
+        "https://event-in-ctg-server.vercel.app/events"
+      );
       const allEvents = await response.json();
 
       // Filter events by this organizer
